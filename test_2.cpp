@@ -1,34 +1,46 @@
-//liệt kê xâu nhị phân có độ dài n bằng phương pháp quay lui
+//Ki thuat sinh ke tiep
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 using namespace std;
 
+ifstream in("input.in");
+ofstream out("output.in");
+
 int n;
 vector<int> a;
 
-void in(){
-    for(int i=1;i<=n;i++){
-        cout << a[i];
+bool sinh(){
+    int i = n;
+    while(i>0 && a[i] == 1){
+        a[i] = 0;
+        i--;
     }
-    cout << endl;
+    if(i==0) return false;
+    a[i] = 1;
+    return true;
 }
 
-void back_track(int i){
-    for(int j=0;j<=1;j++){
-        a[i] = j;
-        if(i==n){
-            in();
+void test_case(){
+    in >> n;
+    a.assign(n+1,0);
+    do{
+        for(int i=1;i<=n;i++){
+            out << a[i];
         }
-        else{
-            back_track(i+1);
-        }
-    }
+        out << endl;
+    }while(sinh());
 }
 
 int main(){
-    cin >> n;
-    a.assign(n+1,0);
-    back_track(1);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    in >> t;
+    while(t--){
+        test_case();
+    }
     return 0;
 }
