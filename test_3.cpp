@@ -1,9 +1,13 @@
-//liệt kê các tập con k phần tử của 1,2,...n
-
+//Liet ke cac tap con k phan tu cua 1,2,...n
+//Sinh ke tiep
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 using namespace std;
+
+ifstream in("input.in");
+ofstream out("output.in");
 
 int n,k;
 vector<int> a;
@@ -14,22 +18,33 @@ bool sinh(){
     if(i==0) return false;
     a[i]++;
     for(int j=i+1;j<=k;j++){
-        a[j] = a[j-1]+1;
+        a[j] = a[j-1] + 1;
     }
     return true;
 }
 
-int main(){
-    cin >> n >> k;
-    a.assign(k+1,0);
+void test_case(){
+    in >> k >> n;
+    a.assign(k+1 , 0);
     for(int i=1;i<=k;i++){
         a[i] = i;
     }
     do{
         for(int i=1;i<=k;i++){
-            cout << a[i];
+            out << a[i];
         }
-        cout << endl;
+        out << endl;
     }while(sinh());
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    in >> t;
+    while(t--){
+        test_case();
+    }    
     return 0;
 }
