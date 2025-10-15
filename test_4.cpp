@@ -1,45 +1,43 @@
+// Liệt kê các tập con k phần tử của {1, 2, ..., n}
+// Quay lui (Backtracking)
 #include <iostream>
+#include <fstream>
 #include <vector>
-#include <algorithm>
-
 using namespace std;
 
-int n;
-vector<int> a;
-vector<bool> used;
+ifstream in("input.in");
+ofstream out("output.in");
 
-void quay_lui(int k){
-    if(k > n){
-        for(int i=1;i<=n;i++) cout << a[i];
-        cout << " ";
-        return;
-    }
-    for(int i=1;i<=n;i++){
-        if(!used[i]){
-            a[k] = i;
-            used[i] = true;
-            quay_lui(k+1);
-            used[i] = false;
+int n, k;
+vector<int> a;
+
+void back_track(int i) {
+    for (int j = a[i - 1] + 1; j <= n - k + i; j++) {
+        a[i] = j;
+        if (i == k) {
+            for (int q = 1; q <= k; q++) out << a[q];
+            out << "\n";
+        } else {
+            back_track(i + 1);
         }
     }
 }
 
-void test_case(){
-    cin >> n;
-    a.assign(n+1,0);
-    used.assign(n+1,false);
-    quay_lui(1);
-    cout << endl;
+void test_case() {
+    in >> n >> k;
+    a.assign(k + 1, 0); // khởi tạo mảng a
+    back_track(1);
 }
 
-int main(){
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
     int t;
-    cin >> t;
-    while(t--){
+    in >> t;
+    while (t--) {
         test_case();
+        out << '\n'; // cách dòng giữa các test
     }
     return 0;
 }
