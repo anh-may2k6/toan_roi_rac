@@ -1,31 +1,46 @@
-//Dùng phương pháp sinh
+//kỹ thuật quay lui
+
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 using namespace std;
 
+ifstream in("input.in");
+ofstream out("output.in");
+
 int n;
 vector<int> a;
 
-bool sinh(){
-    int i = n;
-    while(i>0 && a[i] == 1){
-        a[i] = 0;
-        i--;
+void back_track(int i){
+    for(int j=0;j<=1;j++){
+        a[i] = j;
+        if(i == n-1){
+            for(int k : a){
+                out << k;
+            }
+            out << endl;
+        }
+        else{
+            back_track(i+1);
+        }
     }
-    if(i==0) return false;
-    a[i] = 1;
-    return true;
+}
+
+void test_case(){
+    in >> n;
+    a.assign(n, 0);
+    back_track(0);
 }
 
 int main(){
-    cin >> n;
-    a.assign(n+1,0);
-    do{
-        for(int i=1;i<=n;i++){
-            cout << a[i];
-        }
-        cout << endl;
-    }while(sinh());
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    in >> t;
+    while(t--){
+        test_case();
+    }
     return 0;
 }
